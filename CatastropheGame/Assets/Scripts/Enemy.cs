@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour
     public float moveSpeed = 5f;
     private Rigidbody2D rb;
     private Vector2 movement;
+    public GameObject bullet;
 
     // Start is called before the first frame update
     void Start(){
@@ -21,5 +22,9 @@ public class Enemy : MonoBehaviour
 
     private void FixedUpdate() {
         transform.position = Vector2.MoveTowards(transform.position, Player.transform.position, moveSpeed * Time.fixedDeltaTime);
+    }
+
+    private void OnTriggerEnter2D(Collider2D bullet) {
+        Object.Destroy(this.gameObject);
     }
 }
