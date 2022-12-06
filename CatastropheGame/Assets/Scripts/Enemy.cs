@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public GameObject Player;
+    public GameObject player;
+    public GameObject bullet;
     public float moveSpeed = 5f;
     private Rigidbody2D rb;
     private Vector2 movement;
-    public GameObject bullet;
 
     // Start is called before the first frame update
     void Start(){
-        rb = GetComponent<Rigidbody2D>();
+        rb = this.GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -21,10 +21,12 @@ public class Enemy : MonoBehaviour
     }
 
     private void FixedUpdate() {
-        transform.position = Vector2.MoveTowards(transform.position, Player.transform.position, moveSpeed * Time.fixedDeltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, player.transform.position, moveSpeed * Time.fixedDeltaTime);
     }
 
-    private void OnTriggerEnter2D(Collider2D bullet) {
-        Object.Destroy(this.gameObject);
+    private void OnTriggerEnter2D(Collider2D collision) {
+        if(collision.tag == "Bullet") {
+            Object.Destroy(this.gameObject);
+        }
     }
 }
