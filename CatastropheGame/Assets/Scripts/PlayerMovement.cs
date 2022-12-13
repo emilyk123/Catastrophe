@@ -8,20 +8,26 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 movement;
     public float moveSpeed = 5f;
     public GameObject bullet;
+    private bool lookingRight;
 
     // Start is called before the first frame update
     private void Awake() {
         rb = GetComponent<Rigidbody2D>();
+        lookingRight = true;
     }
 
     // Update is called once per frame
     void Update(){
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
-        if(Input.GetKeyDown("space") == true){
-            GameObject newBullet = GameObject.Instantiate(bullet, rb.position, Quaternion.identity);
-            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            newBullet.GetComponent<Bullet>().dir = (mousePos - rb.position).normalized;
+        if(Input.GetKeyDown(KeyCode.A) && lookingRight) {
+            transform.Rotate(0, 180f, 0);
+            lookingRight = false;
+        }
+        
+        if(Input.GetKeyDown(KeyCode.D) && !lookingRight) {
+            transform.Rotate(0, 180f, 0);
+            lookingRight = true;
         }
     }
 
